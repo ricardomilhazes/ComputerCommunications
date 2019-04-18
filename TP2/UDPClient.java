@@ -4,30 +4,26 @@ import java.net.*;
 class UDPClient{
 	Transferecc cc;
 	DatagramSocket clientSocket;
-    byte[] sendData = new byte[1024];
-    byte[] receiveData = new byte[1024];
+	byte[] receiveData = new byte[1024];
 
     public UDPClient() throws Exception{
     	cc = new Transferecc();
     	clientSocket = new DatagramSocket();
     }
 
-    public void send(String sentence, InetAddress IPAddress) throws Exception{
-  
-	    sendData = sentence.getBytes();
-	    IPAddress = InetAddress.getByName("localhost");
-	    DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 9876);
+    public void send(TProto fragmento, InetAddress IPAddress, int port) throws Exception{
+	    byte[] sendData = fragmento.size();
+	    DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
 	    clientSocket.send(sendPacket);
     }
 
    public void run(){
    		try{
-   			while(true){
-				DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-			    clientSocket.receive(receivePacket);
-			    String modifiedSentence = new String(receivePacket.getData());
-			    System.out.println("FROM SERVER:" + modifiedSentence);
-			}
+   		while(true){
+			DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+			clientSocket.receive(receivePacket);
+			cc.receiveDatagram(receivePacket);
+		}
    		} catch(Exception e) {
    		e.printStackTrace();
    		} finally {
