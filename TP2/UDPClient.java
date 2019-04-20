@@ -17,6 +17,10 @@ class UDPClient{
 	    clientSocket.send(sendPacket);
     }
 
+    public void recebeSYNeACK(byte[] data) {
+      /*..........*/
+    }
+
    public void run(){
    		try{
    		while(true){

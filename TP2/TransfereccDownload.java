@@ -22,23 +22,43 @@ class TransfereccDownload {
 		downloadData[n_segmento]=p;
 	}
 
-	public void beginConnection(){   // falta organizar esta funcao acho
+	public void conectar(){   // falta organizar esta funcao acho
         // envia SYN          
-        TProto syn = new TProto(0, 1, 1024, new String(), true, false, false, false, new byte[0]);
+        TProto syn = new TProto(0, 1, false, true, false, false,false,false);
         cliente.send(syn,addressDest,7777);
 
-        // recebe SYNACK
-        while(true){
-            TProto synack = nextPDU();
-            if(synack.getSYN() == true && synack.getACK() == true){
-                segment_num = Integer.valueOf(synack.getOptions());
-                break;
-            }
-        }
 
         // envia ACK
-        TProto ack = new TProto(2, 1, 1024, new String(), false, false, true, false, new byte[0]);
+        TProto ack = new TProto(2,1,true,false,false,false,false,false);
         cliente.send(ack,addressDest,7777);
     }
 	
 }
+
+public void run(){
+        try{
+          
+            conectar();
+
+            File file = new File(filename);
+
+            if (file.createNewFile()){
+                System.out.println("Ficheiro criado.");
+            } else {
+                System.out.println("O ficheiro já existe, a informação vai ser juntada.");
+            }
+
+            FileWriter writer = new FileWriter(file);
+
+
+            // NÃO TENHO A CERTEZA DESTA PARTE!!!
+            String dados = new String(downloadData);
+            writer.write(dados);
+
+            writer.close();
+
+            System.out.println("Download 100% com sucesso");
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
