@@ -24,7 +24,7 @@ class TransfereccUpload {
         n=0;
     }
 
-    public recebe (TProto p) {
+    public void recebe (TProto p) {
     	uploadData[n]=p;
     }
 	

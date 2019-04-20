@@ -10,7 +10,7 @@ class TransfereccDownload {
 
 
 
-	public TransfereccDownload (UDPClient cliente1, String ipdestino, String ficheiro) throws UnknownHost Exception {
+	public TransfereccDownload (UDPClient cliente1, String ipdestino, String ficheiro) throws UnknownHostException {
 		cliente=cliente1;
 		ipdestino= InetAddress.getByName(ipdestino);
 		ficheirodestino=ficheiro;
@@ -19,7 +19,7 @@ class TransfereccDownload {
 
 	public void recebe (TProto p) {
 		System.out.println("Datagram Packet from " + this.ipdestino );
-		byte[n_segmento]=p;
+		downloadData[n_segmento]=p;
 	}
 
 	public void beginConnection(){   // falta organizar esta funcao acho

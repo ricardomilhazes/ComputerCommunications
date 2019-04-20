@@ -4,22 +4,33 @@ import java.net.*;
 class Transfereapp{
 
 	public static void get(String ficheiro, String address) throws Exception{
-		File f = new File(ficheiro);
-		TransfereccDownload.run();
+		try{
+
+			new Thread(new Transferecc(ficheiro,address)).run();
+		} catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	public static void put(String ficheiro) throws Exception{
-		File f = new File(ficheiro);
-		Transferecc
-
+		try{
+			File f = new File(ficheiro);
+			if(f.exists())
+				new Thread(new Transferecc(f)).run();
+			else
+				System.out.println("Ficheiro inexistente");
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String[] args) {
-		if(args[2].equals("get")){
-			get(args[3],args[4]);
+		if(args[0].equals("get")){
+			get(args[1],args[2]);
 		}
-		if(args[2].equals("put")){
-			put(args[3]);
+		if(args[0].equals("put")){
+			put(args[1]);
 		}
 	}
 }

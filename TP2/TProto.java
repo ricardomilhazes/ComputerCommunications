@@ -9,7 +9,7 @@ class TProto{
 
 	public TProto(int seq, int seq_conf, boolean ack, boolean syn, boolean fin, boolean psh, boolean rst, boolean urg){
 		sequencia = seq;
-		seq_conf = seq_conf
+		seq_conf = seq_conf;
 		ack = ack;
 		syn = syn;
 		fin = fin;
@@ -22,7 +22,7 @@ class TProto{
 		
 	}
 
-	public byte[] size() throws IOException {
+	public byte[] fromTProto() throws IOException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ObjectOutputStream oos = new ObjectOutputStream(baos);
 		oos.writeObject(this);

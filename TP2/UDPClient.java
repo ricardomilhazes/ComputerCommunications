@@ -6,13 +6,13 @@ class UDPClient{
 	DatagramSocket clientSocket;
 	byte[] receiveData = new byte[1024];
 
-    public UDPClient() throws Exception{
-    	cc = new Transferecc();
+    public UDPClient(Transferecc tcc) throws Exception{
+    	cc = tcc;
     	clientSocket = new DatagramSocket();
     }
 
     public void send(TProto fragmento, InetAddress IPAddress, int port) throws Exception{
-	    byte[] sendData = fragmento.size();
+	    byte[] sendData = fragmento.fromTProto();
 	    DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
 	    clientSocket.send(sendPacket);
     }
