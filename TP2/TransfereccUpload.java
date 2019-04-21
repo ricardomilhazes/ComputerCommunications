@@ -86,12 +86,11 @@ class TransfereccUpload {
     */
     public void conectar(){
 
-        //AQUI BASICAMENTE É FAZER UMA FUNCAO OU UMA MANEIRA DE IR BUSCAR O SYN E O ACK QUE SAO ENVIADOS NA CONEXAO DO DOWNLOAD!!
-
-
-
+      «
         // Recebe SYN
         
+        TProto syn = syn.trata(cc.receiveDatagram(cliente.receive()));
+
         // divide ficheiro consoante o MSS
         divideFile();
 
@@ -99,8 +98,8 @@ class TransfereccUpload {
         TProto synack = new PDU(1, 0, true, true, false, false,false,false);
         cliente.send(synack,addressDest,7777);
 
-        // recebe ACK
-       
+          // recebe ACK
+         TProto ack = ack.trata(cc.receiveDatagram(cliente.receive()));
     }
 
     /*
