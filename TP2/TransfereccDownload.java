@@ -1,11 +1,12 @@
 import java.net.*;
 import java.io.*;
+import java.util.*;
 
 class TransfereccDownload extends Thread{
 	UDPClient cliente;
 	InetAddress ipd;
 	String ficheirodestino;
-	TProto downloadData = new TProto(); 
+	LinkedList<TProto> downloadData = new LinkedList<>(); 
 	int n_segmento;
 
 
@@ -19,13 +20,32 @@ class TransfereccDownload extends Thread{
 
 	public void recebe (TProto p) {
 		System.out.println("Datagram Packet from " + this.ipd );
-		downloadData=p;
+		downloadData.add(p);
+	}
+
+    public TProto nextTProto(){
+		TProto tp;
+		if(downloadData.size()>0){
+				tp = downloadData.removeFirst();
+
+				return tp;
+			}
+
+		return null;
 	}
 
 	public void conectar() throws Exception{   // falta organizar esta funcao acho
         // envia SYN          
         TProto syn = new TProto(0, 1, false, true, false, false,false,false,new byte[0]);
         cliente.send(syn,ipd,7777);
+
+       /* while(true){
+        	TProto synack = nextTProto();
+        	if(synack.getSyn()==true && syn.getAck() == true){
+        		n_segmento = Int
+        	}
+        }
+        */
 
 
         // envia ACK
@@ -50,10 +70,14 @@ public void run(){
 
 
             // NÃO TENHO A CERTEZA DESTA PARTE!!!
-	    TProto tp = downloadData;
-            String dados = new String(tp.getDados());
-            writer.write(dados);
+            int segmento=0;
+            while(segmento < n_segmento){
+            	TProto tp = nextTProto();
+            	String dados = new String(tp.getDados());
+            	writer.write(dados);
+            	segmento++;
 
+            }
             writer.close();
 
             System.out.println("Download 100% com sucesso");

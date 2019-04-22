@@ -11,7 +11,7 @@ class TransfereccUpload extends Thread{
 	FileInputStream fis;
 	int mss;
 	int n_segmento;
-	TProto uploadData = new TProto();
+	LinkedList<TProto> uploadData = new LinkedList<>();
     Map<Integer,String> segmented_file = new HashMap<>();  // map com os varios fragmentos do ficheiro que dividimos
 
 
@@ -27,8 +27,19 @@ class TransfereccUpload extends Thread{
     }
 
     public void recebe (TProto p) {
-    	uploadData=p;
+    	uploadData.add(p);
     }
+
+    public TProto nextTProto(){
+		TProto tp;
+		if(uploadData.size()>0){
+				tp = uploadData.removeFirst();
+
+				return tp;
+			}
+
+		return null;
+	}
 
 
     public void enviarFicheiro() throws Exception{
