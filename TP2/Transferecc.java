@@ -1,17 +1,16 @@
 import java.io.*;
 import java.net.*;
 
-class Transferecc{
+class Transferecc extends Thread{
 	UDPClient cliente;
 	boolean upload;
 	boolean download;
 	String filename;
 	File f;
 	String IPdestino;
-	TransfereccUpload tfu;
 	TransfereccDownload tfd;
 
-	public Transferecc(File fich){
+	public Transferecc(File fich) throws SocketException,Exception{
 		cliente = new UDPClient(this);
 		this.upload=true;
 		this.download=false;
@@ -20,7 +19,7 @@ class Transferecc{
 		this.IPdestino="";
 	}
 
-	public Transferecc(String ficheiro, String address){
+	public Transferecc(String ficheiro, String address) throws SocketException,Exception{
 		cliente = new UDPClient(this);
 		this.upload=false;
 		this.download=true;
@@ -28,18 +27,55 @@ class Transferecc{
 		this.IPdestino=address;
 	}
 
-	public Object toTProto(byte[] data){
+	public Object toTProto(byte[] data) throws IOException, ClassNotFoundException{
 		ByteArrayInputStream bais = new ByteArrayInputStream(data);
 		ObjectInputStream ois = new ObjectInputStream(bais);
 		return ois.readObject();
 	}
 
-	public byte[] receiveDatagram(DatagramPacket p){
+	public void receiveDatagram(DatagramPacket p){
 		
 		byte[] dados = p.getData();
 
-		InnetAddress ip = p.getAdress();
-		return dados;
+		InetAddress ip = p.getAddress();
+
+		try{
+
+			TProto tp =	(TProto) toTProto(dados);
+
+			if(this.upload == true){
+
+				TransfereccUpload tup = new TransfereccUpload(cliente,this,ip,this.f);
+
+				new Thread(tup).start();
+
+				tup.recebe(tp);
+			}
+
+			else{
+				tfd.recebe(tp);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+
+	}
+
+	public void run(){
+		try{
+			Thread client = new Thread(cliente);
+			client.start();
+
+			if(this.download == true){
+				tfd = new TransfereccDownload(cliente,IPdestino,filename);
+				new Thread(tfd).run();
+
+				cliente.closeClient();
+			}
+		} catch(UnknownHostException e){
+			e.printStackTrace();
+		}
 	}
 
 }

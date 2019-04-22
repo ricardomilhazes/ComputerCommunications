@@ -1,14 +1,14 @@
 import java.io.*;
 import java.net.*;
 
-class UDPClient{
+class UDPClient extends Thread{
 	Transferecc cc;
 	DatagramSocket clientSocket;
 	byte[] receiveData = new byte[1024];
 
     public UDPClient(Transferecc tcc) throws Exception{
     	cc = tcc;
-    	clientSocket = new DatagramSocket();
+    	clientSocket = new DatagramSocket(7777);
     }
 
     public void send(TProto fragmento, InetAddress IPAddress, int port) throws Exception{
@@ -17,10 +17,9 @@ class UDPClient{
 	    clientSocket.send(sendPacket);
     }
 
-    public DatagramPacket receive() throws Exception {
-     DatagramPacket p = new DatagramPacket(receiveData, receivaData.length);
-    return p;
-    } 
+    void closeClient(){
+    	clientSocket.close();
+    }
 
    public void run(){
    		try{

@@ -1,46 +1,44 @@
 import java.net.*;
 import java.io.*;
 
-class TransfereccDownload {
+class TransfereccDownload extends Thread{
 	UDPClient cliente;
-	InetAddress ipdestino;
+	InetAddress ipd;
 	String ficheirodestino;
-	byte[] downloadData = new byte[1024]; 
+	TProto downloadData = new TProto(); 
 	int n_segmento;
 
 
 
 	public TransfereccDownload (UDPClient cliente1, String ipdestino, String ficheiro) throws UnknownHostException {
 		cliente=cliente1;
-		ipdestino= InetAddress.getByName(ipdestino);
+		ipd= InetAddress.getByName(ipdestino);
 		ficheirodestino=ficheiro;
 		n_segmento=0;
 	}
 
 	public void recebe (TProto p) {
-		System.out.println("Datagram Packet from " + this.ipdestino );
-		downloadData[n_segmento]=p;
+		System.out.println("Datagram Packet from " + this.ipd );
+		downloadData=p;
 	}
 
-	public void conectar(){   // falta organizar esta funcao acho
+	public void conectar() throws Exception{   // falta organizar esta funcao acho
         // envia SYN          
-        TProto syn = new TProto(0, 1, false, true, false, false,false,false);
-        cliente.send(syn,addressDest,7777);
+        TProto syn = new TProto(0, 1, false, true, false, false,false,false,new byte[0]);
+        cliente.send(syn,ipd,7777);
 
 
         // envia ACK
-        TProto ack = new TProto(2,1,true,false,false,false,false,false);
-        cliente.send(ack,addressDest,7777);
+        TProto ack = new TProto(2,1,true,false,false,false,false,false,new byte[0]);
+        cliente.send(ack,ipd,7777);
     }
-	
-}
 
 public void run(){
         try{
           
             conectar();
 
-            File file = new File(filename);
+            File file = new File(ficheirodestino);
 
             if (file.createNewFile()){
                 System.out.println("Ficheiro criado.");
@@ -52,7 +50,7 @@ public void run(){
 
 
             // NÃO TENHO A CERTEZA DESTA PARTE!!!
-            String dados = new String(downloadData);
+            String dados = new String(downloadData.getDados());
             writer.write(dados);
 
             writer.close();
@@ -62,3 +60,4 @@ public void run(){
             e.printStackTrace();
         }
     }
+}

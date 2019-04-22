@@ -25,12 +25,17 @@ class Transfereapp{
 		}
 	}
 
-	public static void main(String[] args) {
-		if(args[0].equals("get")){
-			get(args[1],args[2]);
+	public static void main(String[] args) throws Exception{
+		try{
+			if(args[0].equals("get")){
+				get(args[1],args[2]);
+			}
+			if(args[0].equals("put")){
+				put(args[1]);
+			}
 		}
-		if(args[0].equals("put")){
-			put(args[1]);
+		catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 }

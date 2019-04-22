@@ -1,7 +1,8 @@
 import java.net.*;
 import java.io.*;
+import java.util.*;
 
-class TransfereccUpload {
+class TransfereccUpload extends Thread{
 
 	UDPClient cliente;
 	Transferecc cc;
@@ -10,11 +11,11 @@ class TransfereccUpload {
 	FileInputStream fis;
 	int mss;
 	int n_segmento;
-	byte[] uploadData = new byte[1024];
+	TProto uploadData = new TProto();
     Map<Integer,String> segmented_file = new HashMap<>();  // map com os varios fragmentos do ficheiro que dividimos
 
 
-	public TransfereCCUpload(UDPClient client, Transferecc transferecc,InetAddress ipdest, File f) throws UnknownHostException, IOException{
+	public TransfereccUpload(UDPClient client, Transferecc transferecc,InetAddress ipdest, File f) throws UnknownHostException, IOException{
         cliente = client;
         cc = transferecc;
         enddestino = ipdest;
@@ -22,18 +23,18 @@ class TransfereccUpload {
         // Creates a FileInputStream by opening a connection to an actual file, the file named by the File object file in the file system.
         fis = new FileInputStream(f);
         mss = 1024;
-        n=0;
+        n_segmento=0;
     }
 
     public void recebe (TProto p) {
-    	uploadData[n]=p;
+    	uploadData=p;
     }
 
 
     public void enviarFicheiro(){
-            TProto p = new PDU(0, 0,false, false, false, true,false,false);
+            TProto p = new TProto(0, 0,false, false, false, true,false,false,new byte[0]);
             // AgenteUDP sends PDU
-            cliente.send(p,addressDest,7777);
+            cliente.send(p,enddestino,7777);
         }
 
 
@@ -45,7 +46,7 @@ class TransfereccUpload {
            
             InputStreamReader isr = new InputStreamReader(fis);
            
-            long file_length = file.length();
+            long file_length = ficheiro.length();
             char[] file_char = new char[(int)file_length];
          
             isr.read(file_char, 0, (int)file_length);
@@ -86,20 +87,19 @@ class TransfereccUpload {
     */
     public void conectar(){
 
-      «
         // Recebe SYN
         
-        TProto syn = syn.trata(cc.receiveDatagram(cliente.receive()));
+        //TProto syn = syn.trata(cc.receiveDatagram(cliente.receive()));
 
         // divide ficheiro consoante o MSS
-        divideFile();
+        dividirFicheiro();
 
         // envia SYNACK
-        TProto synack = new PDU(1, 0, true, true, false, false,false,false);
-        cliente.send(synack,addressDest,7777);
+        TProto synack = new TProto(1, 0, true, true, false, false,false,false,new byte[0]);
+        cliente.send(synack,enddestino,7777);
 
           // recebe ACK
-         TProto ack = ack.trata(cc.receiveDatagram(cliente.receive()));
+         //TProto ack = ack.trata(cc.receiveDatagram(cliente.receive()));
     }
 
     /*
@@ -109,8 +109,10 @@ class TransfereccUpload {
 
         conectar();
 
-        sendFile();
+        enviarFicheiro();
 
-        tfcc.desconectar(addressDest); // FALTA FAZER A FUNCAO DESCONECTAR
+        //tfcc.desconectar(enddestino); // FALTA FAZER A FUNCAO DESCONECTAR
 
     }
+
+}
