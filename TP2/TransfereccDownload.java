@@ -74,6 +74,7 @@ public void run(){
             while(segmento < n_segmento){
             	TProto tp = nextTProto();
             	String dados = new String(tp.getDados());
+            	System.out.println(dados);
             	writer.write(dados);
             	segmento++;
 

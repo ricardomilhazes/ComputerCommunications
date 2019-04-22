@@ -41,16 +41,12 @@ class TransfereccUpload extends Thread{
 		return null;
 	}
 
-
+	//MELHORAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public void enviarFicheiro() throws Exception{
             TProto p = new TProto(0, 0,false, false, false, true,false,false,new byte[0]);
             // AgenteUDP sends PDU
             cliente.send(p,enddestino,7777);
         }
-
-
-
-        // esta funcao é totalmente do Joao e do Braga, opa eu tive a ver e esta fixe e percebe-se nao sei se será melhor fazer umas mudanças à nossa maneira so p nao dar estrondo
 
      public void dividirFicheiro (){
         try{
