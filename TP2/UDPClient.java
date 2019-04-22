@@ -17,10 +17,6 @@ class UDPClient extends Thread{
 	    clientSocket.send(sendPacket);
     }
 
-    void closeClient(){
-    	clientSocket.close();
-    }
-
    public void run(){
    		try{
    		while(true){

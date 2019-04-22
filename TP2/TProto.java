@@ -1,7 +1,7 @@
 import java.io.*;
 import java.net.*;
 
-class TProto{
+class TProto implements Serializable{
 	
 	int sequencia, sequencia_confirmacao;
 	boolean ack, syn, fin, psh, rst, urg;
