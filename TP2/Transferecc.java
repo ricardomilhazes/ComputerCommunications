@@ -34,12 +34,12 @@ class Transferecc{
 		return ois.readObject();
 	}
 
-	public void receiveDatagram(DatagramPacket p){
+	public byte[] receiveDatagram(DatagramPacket p){
 		
 		byte[] dados = p.getData();
 
 		InnetAddress ip = p.getAdress();
-
+		return dados;
 	}
 
 }

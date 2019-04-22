@@ -17,9 +17,10 @@ class UDPClient{
 	    clientSocket.send(sendPacket);
     }
 
-    public void recebeSYNeACK(byte[] data) {
-      /*..........*/
-    }
+    public DatagramPacket receive() throws Exception {
+     DatagramPacket p = new DatagramPacket(receiveData, receivaData.length);
+    return p;
+    } 
 
    public void run(){
    		try{
