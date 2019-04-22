@@ -8,7 +8,15 @@ class TProto implements Serializable{
 	byte[] dados;
 
 	public TProto(){
-		
+	this.sequencia=0;
+	this.sequencia_confirmacao=0;
+	this.ack=false;
+	this.fin=false;
+	this.syn=false;
+	this.psh=false;
+	this.rst=false;
+	this.urg=false;
+	this.dados=new byte[0];	
 	}
 
 

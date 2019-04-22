@@ -16,7 +16,7 @@ class Transferecc extends Thread{
 		this.download=false;
 		this.f = fich;
 		this.filename=fich.getName();
-		this.IPdestino="";
+		IPdestino="";
 	}
 
 	public Transferecc(String ficheiro, String address) throws SocketException,Exception{
@@ -24,7 +24,7 @@ class Transferecc extends Thread{
 		this.upload=false;
 		this.download=true;
 		this.filename=ficheiro;
-		this.IPdestino=address;
+		IPdestino=address;
 	}
 
 	public Object toTProto(byte[] data) throws IOException, ClassNotFoundException{
@@ -45,7 +45,8 @@ class Transferecc extends Thread{
 
 			if(this.upload == true){
 
-				TransfereccUpload tup = new TransfereccUpload(cliente,this,ip,this.f);
+				TransfereccUpload tup;
+				tup = new TransfereccUpload(cliente,this,ip,this.f);
 
 				new Thread(tup).start();
 
@@ -70,8 +71,6 @@ class Transferecc extends Thread{
 			if(this.download == true){
 				tfd = new TransfereccDownload(cliente,IPdestino,filename);
 				new Thread(tfd).run();
-
-				cliente.closeClient();
 			}
 		} catch(UnknownHostException e){
 			e.printStackTrace();

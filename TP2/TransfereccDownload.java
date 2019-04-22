@@ -50,7 +50,8 @@ public void run(){
 
 
             // NÃO TENHO A CERTEZA DESTA PARTE!!!
-            String dados = new String(downloadData.getDados());
+	    TProto tp = downloadData;
+            String dados = new String(tp.getDados());
             writer.write(dados);
 
             writer.close();

@@ -31,7 +31,7 @@ class TransfereccUpload extends Thread{
     }
 
 
-    public void enviarFicheiro(){
+    public void enviarFicheiro() throws Exception{
             TProto p = new TProto(0, 0,false, false, false, true,false,false,new byte[0]);
             // AgenteUDP sends PDU
             cliente.send(p,enddestino,7777);
@@ -85,7 +85,7 @@ class TransfereccUpload extends Thread{
     /*
         Método que define o início de uma conexão
     */
-    public void conectar(){
+    public void conectar() throws Exception{
 
         // Recebe SYN
         
@@ -106,10 +106,14 @@ class TransfereccUpload extends Thread{
         Este método vai ter de ser otimizado
     */
     public void run(){
+	try{
+        	conectar();
 
-        conectar();
-
-        enviarFicheiro();
+        	enviarFicheiro();
+	}
+	catch(Exception e){
+	e.printStackTrace();
+	}
 
         //tfcc.desconectar(enddestino); // FALTA FAZER A FUNCAO DESCONECTAR
 
