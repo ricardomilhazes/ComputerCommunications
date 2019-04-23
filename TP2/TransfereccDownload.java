@@ -26,7 +26,6 @@ class TransfereccDownload extends Thread{
     public TProto nextTProto(){
 		TProto tp;
 		while(downloadData.size()==0){}
-		
 
 		tp = downloadData.removeFirst();
 
@@ -45,9 +44,6 @@ class TransfereccDownload extends Thread{
         		break;
         	}
         }
-        
-
-
         // envia ACK
         TProto ack = new TProto(2,1,1024,true,false,false,false,false,false,new byte[0]);
         cliente.send(ack,ipd,7777);
@@ -68,8 +64,6 @@ public void run(){
 
             FileWriter writer = new FileWriter(file);
 
-
-            // NÃO TENHO A CERTEZA DESTA PARTE!!!
             int segmento=0;
             while(segmento < n_segmento){
             	TProto tp = nextTProto();
