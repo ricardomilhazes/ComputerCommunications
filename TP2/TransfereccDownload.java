@@ -25,7 +25,7 @@ class TransfereccDownload extends Thread{
 
     public TProto nextTProto(){
 		TProto tp;
-		if(downloadData.size()>0){
+		if(downloadData.size()>=0){
 				tp = downloadData.removeFirst();
 
 				return tp;

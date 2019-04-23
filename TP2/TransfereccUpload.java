@@ -32,9 +32,8 @@ class TransfereccUpload extends Thread{
 
     public TProto nextTProto(){
 		TProto tp;
-		if(uploadData.size()>0){
+		if(uploadData.size()>=0){
 				tp = uploadData.removeFirst();
-
 				return tp;
 			}
 
