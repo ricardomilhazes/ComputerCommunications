@@ -47,7 +47,7 @@ class TransfereccUpload extends Thread{
 
             for (int i=0, seq = 0; i< n_segmento; i++, seq+=mss) {
                 String data = segmented_file.get(seq);
-                TProto p = new TProto (seq,0,false,false,false,false,false,false,data.getBytes());
+                TProto p = new TProto (seq,0,1024,false,false,false,false,false,false,data.getBytes());
                 cliente.send(p,enddestino,7777);
             }
             
@@ -101,17 +101,27 @@ class TransfereccUpload extends Thread{
 
         // Recebe SYN
         
-        //TProto syn = syn.trata(cc.receiveDatagram(cliente.receive()));
+          while(true){
+            TProto syn = nextTProto();
+            if(syn.getSyn() == true){
+                mss = syn.getMSS();
+                break;
+            }
+        }
 
         // divide ficheiro consoante o MSS
         dividirFicheiro();
 
         // envia SYNACK
-        TProto synack = new TProto(1, 0, true, true, false, false,false,false,new byte[0]);
+        TProto synack = new TProto(1, 0,1024, true, true, false, false,false,false,new byte[0]);
         cliente.send(synack,enddestino,7777);
 
           // recebe ACK
-         //TProto ack = ack.trata(cc.receiveDatagram(cliente.receive()));
+          while(true){
+            TProto ack = nextTProto();
+            if(ack.getACK() == true)
+                break;
+        }
     }
 
     /*

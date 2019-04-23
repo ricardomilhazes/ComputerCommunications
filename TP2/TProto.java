@@ -3,26 +3,28 @@ import java.net.*;
 
 class TProto implements Serializable{
 	
-	int sequencia, sequencia_confirmacao;
+	int sequencia, sequencia_confirmacao,mss;
 	boolean ack, syn, fin, psh, rst, urg;
 	byte[] dados;
 
 	public TProto(){
 	this.sequencia=0;
 	this.sequencia_confirmacao=0;
+	this.mss=1024;
 	this.ack=false;
 	this.fin=false;
 	this.syn=false;
 	this.psh=false;
 	this.rst=false;
 	this.urg=false;
-	this.dados=new byte[0];	
+	this.dados=new byte[0];
 	}
 
 
-	public TProto(int seq, int seq_conf, boolean ack, boolean syn, boolean fin, boolean psh, boolean rst, boolean urg, byte[] d){
+	public TProto(int seq, int seq_conf,int mss1, boolean ack, boolean syn, boolean fin, boolean psh, boolean rst, boolean urg, byte[] d){
 		sequencia = seq;
 		seq_conf = seq_conf;
+		mss=mss1;
 		ack = ack;
 		syn = syn;
 		fin = fin;
@@ -38,6 +40,10 @@ class TProto implements Serializable{
 
 	public int getConfirmacao(){
 		return this.sequencia_confirmacao;
+	}
+
+	public int getMSS() {
+		return this.mss;
 	}
 
 	public Boolean getAck(){

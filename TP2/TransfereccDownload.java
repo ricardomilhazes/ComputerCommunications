@@ -36,16 +36,16 @@ class TransfereccDownload extends Thread{
 
 	public void conectar() throws Exception{   // falta organizar esta funcao acho
         // envia SYN          
-        TProto syn = new TProto(0, 1, false, true, false, false,false,false,new byte[0]);
+        TProto syn = new TProto(0, 1, 1024,false, true, false, false,false,false,new byte[0]);
         cliente.send(syn,ipd,7777);
 
-       /* while(true){
+       while(true){
         	TProto synack = nextTProto();
         	if(synack.getSyn()==true && syn.getAck() == true){
-        		n_segmento = Int
+        		break;
         	}
         }
-        */
+        
 
 
         // envia ACK
