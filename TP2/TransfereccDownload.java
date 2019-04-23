@@ -25,13 +25,13 @@ class TransfereccDownload extends Thread{
 
     public TProto nextTProto(){
 		TProto tp;
-		if(downloadData.size()>=0){
-				tp = downloadData.removeFirst();
+		while(downloadData.size()==0){}
+		
 
-				return tp;
-			}
+		tp = downloadData.removeFirst();
 
-		return null;
+		return tp;
+			
 	}
 
 	public void conectar() throws Exception{   // falta organizar esta funcao acho
