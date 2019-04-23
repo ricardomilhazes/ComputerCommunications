@@ -43,9 +43,14 @@ class TransfereccUpload extends Thread{
 
 	//MELHORAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public void enviarFicheiro() throws Exception{
-            TProto p = new TProto(0, 0,false, false, false, true,false,false,new byte[0]);
-            // AgenteUDP sends PDU
-            cliente.send(p,enddestino,7777);
+            n_segmento = segmented_file.size();
+
+            for (i=0, seq = 0; i< n_segmento; i++, seq+=mss) {
+                String data = segmented_file.get(seq);
+                TProto p = new TProto (seq,0,1024,false,false,false,false,false,false,data.getBytes());
+                cliente.send(p,enddestino,7777);
+            }
+            
         }
 
      public void dividirFicheiro (){
