@@ -45,9 +45,9 @@ class TransfereccUpload extends Thread{
     public void enviarFicheiro() throws Exception{
             n_segmento = segmented_file.size();
 
-            for (i=0, seq = 0; i< n_segmento; i++, seq+=mss) {
+            for (int i=0, seq = 0; i< n_segmento; i++, seq+=mss) {
                 String data = segmented_file.get(seq);
-                TProto p = new TProto (seq,0,1024,false,false,false,false,false,false,data.getBytes());
+                TProto p = new TProto (seq,0,false,false,false,false,false,false,data.getBytes());
                 cliente.send(p,enddestino,7777);
             }
             
