@@ -22,6 +22,7 @@ class UDPClient extends Thread{
       byte[] receiveData = new byte[1024];
 			DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 			clientSocket.receive(receivePacket);
+      System.out.println("cona");
 			cc.receiveDatagram(receivePacket);
 		}
    		} catch(Exception e) {
