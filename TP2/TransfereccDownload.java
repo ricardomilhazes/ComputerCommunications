@@ -38,6 +38,8 @@ class TransfereccDownload extends Thread{
         TProto syn = new TProto(0, 1, 1024,false, true, false, false,false,false,new byte[0]);
         cliente.send(syn,ipd,7777);
 
+        System.out.println("xau1");
+
        while(true){
         	TProto synack = nextTProto();
         	if(synack.getSyn()==true && syn.getAck() == true){
@@ -45,9 +47,14 @@ class TransfereccDownload extends Thread{
         		break;
         	}
         }
+
+        System.out.println("xau2");
+
         // envia ACK
         TProto ack = new TProto(2,1,1024,true,false,false,false,false,false,new byte[0]);
         cliente.send(ack,ipd,7777);
+
+        System.out.println("xau3");
     }
 
 public void run(){

@@ -37,7 +37,7 @@ class TransfereccUpload extends Thread{
 		tp = uploadData.removeFirst();
 		return tp;
 	}
-    
+
     public void enviarFicheiro() throws Exception{
             n_segmento = segmented_file.size();
 
@@ -105,6 +105,8 @@ class TransfereccUpload extends Thread{
             }
         }
 
+        System.out.println("ola1");
+
         // divide ficheiro consoante o MSS
         dividirFicheiro();
 
@@ -112,12 +114,16 @@ class TransfereccUpload extends Thread{
         TProto synack = new TProto(1, 0,1024, true, true, false, false,false,false,new byte[0]);
         cliente.send(synack,enddestino,7777);
 
+        System.out.println("ola2");
+
           // recebe ACK
           while(true){
             TProto ack = nextTProto();
             if(ack.getAck() == true)
                 break;
         }
+
+        System.out.println("ola3");
     }
 
     /*
