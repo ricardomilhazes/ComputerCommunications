@@ -8,6 +8,7 @@ class Transferecc extends Thread{
 	String filename;
 	File f;
 	String IPdestino;
+	TransfereccUpload tfu;
 	TransfereccDownload tfd;
 
 	public Transferecc(File fich) throws SocketException,Exception{
@@ -45,17 +46,26 @@ class Transferecc extends Thread{
 
 			if(this.upload == true){
 
-				TransfereccUpload tup;
-				tup = new TransfereccUpload(cliente,this,ip,this.f);
+				if(tfu==null){
 
-				new Thread(tup).start();
+					TransfereccUpload tup;
+					tup = new TransfereccUpload(cliente,this,ip,this.f);
 
+					new Thread(tup).start();
+
+					tfu = tup;
+
+					tfu.recebe(tp);
+				}
+
+				else{
 				tup.recebe(tp);
 			}
+		}
+		else{
+			tfd.recebe(tp);
+		}
 
-			else{
-				tfd.recebe(tp);
-			}
 		}
 		catch(Exception e){
 			e.printStackTrace();
