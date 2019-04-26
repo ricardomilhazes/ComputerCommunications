@@ -41,6 +41,7 @@ class TransfereccDownload extends Thread{
        while(true){
         	TProto synack = nextTProto();
         	if(synack.getSyn()==true && syn.getAck() == true){
+                n_segmento = 1;
         		break;
         	}
         }

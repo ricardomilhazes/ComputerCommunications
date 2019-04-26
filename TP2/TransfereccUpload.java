@@ -37,8 +37,7 @@ class TransfereccUpload extends Thread{
 		tp = uploadData.removeFirst();
 		return tp;
 	}
-
-	//MELHORAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    
     public void enviarFicheiro() throws Exception{
             n_segmento = segmented_file.size();
 

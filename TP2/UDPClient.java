@@ -4,7 +4,6 @@ import java.net.*;
 class UDPClient extends Thread{
 	Transferecc cc;
 	DatagramSocket clientSocket;
-	byte[] receiveData = new byte[1024];
 
     public UDPClient(Transferecc tcc) throws Exception{
     	cc = tcc;
@@ -20,6 +19,7 @@ class UDPClient extends Thread{
    public void run(){
    		try{
    		while(true){
+      byte[] receiveData = new byte[1024];
 			DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 			clientSocket.receive(receivePacket);
 			cc.receiveDatagram(receivePacket);

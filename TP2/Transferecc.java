@@ -35,7 +35,7 @@ class Transferecc extends Thread{
 
 	public void receiveDatagram(DatagramPacket p){
 		
-		byte[] dados = p.getDados();
+		byte[] dados = p.getData();
 
 		InetAddress ip = p.getAddress();
 
