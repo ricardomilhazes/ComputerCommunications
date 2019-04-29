@@ -48,7 +48,7 @@ class TransfereccDownload extends Thread{
         }
 
         // envia ACK
-        TProto ack = new TProto(2,1,1024,false,true,false,false,false,false,new byte[0]);
+        TProto ack = new TProto(2,1,1024,true,false,false,false,false,false,new byte[0]);
         cliente.send(ack,ipd,7777);
 
     }
