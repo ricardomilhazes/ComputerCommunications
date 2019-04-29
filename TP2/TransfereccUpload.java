@@ -111,7 +111,7 @@ class TransfereccUpload extends Thread{
           // recebe ACK
           while(true){
             TProto ack = nextTProto();
-            System.out.println(ack.getAck());
+            System.out.println("lol");
             if(ack.getAck() == true){
                 break;
 		}
