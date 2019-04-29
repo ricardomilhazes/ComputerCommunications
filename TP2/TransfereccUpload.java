@@ -10,7 +10,6 @@ class TransfereccUpload extends Thread{
 	File ficheiro;
 	FileInputStream fis;
 	int mss;
-	int n_segmento;
 	LinkedList<TProto> uploadData = new LinkedList<>();
     Map<Integer,String> segmented_file = new HashMap<>();  // map com os varios fragmentos do ficheiro que dividimos
 
