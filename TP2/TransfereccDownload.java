@@ -26,7 +26,9 @@ class TransfereccDownload extends Thread{
     public TProto nextTProto(){
 		TProto tp;
 
-		tp = downloadData.removeFirst();
+    while(downloadData.size()==0){ }
+		
+    tp = downloadData.removeFirst();
 
 		return tp;
 			
@@ -38,9 +40,8 @@ class TransfereccDownload extends Thread{
         cliente.send(syn,ipd,7777);
 
        while(true){
-          while(downloadData.size()==0){ }
         	TProto synack = nextTProto();
-        	if(synack.getSyn()==true && syn.getAck() == true){
+        	if(synack.getSyn()==true && synack.getAck() == true){
                 n_segmento = 1;
         		break;
         	}
