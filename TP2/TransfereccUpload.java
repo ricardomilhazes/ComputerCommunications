@@ -23,7 +23,6 @@ class TransfereccUpload extends Thread{
         // Creates a FileInputStream by opening a connection to an actual file, the file named by the File object file in the file system.
         fis = new FileInputStream(f);
         mss = 1024;
-        n_segmento=0;
     }
 
     public void recebe (TProto p) {
@@ -104,7 +103,7 @@ class TransfereccUpload extends Thread{
                 break;
             }
         }
-        
+
         // divide ficheiro consoante o MSS
         dividirFicheiro();
 

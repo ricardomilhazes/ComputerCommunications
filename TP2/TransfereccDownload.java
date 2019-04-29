@@ -15,7 +15,6 @@ class TransfereccDownload extends Thread{
 		cliente=cliente1;
 		ipd= InetAddress.getByName(ipdestino);
 		ficheirodestino=ficheiro;
-		n_segmento=0;
 	}
 
 	public void recebe (TProto p) {

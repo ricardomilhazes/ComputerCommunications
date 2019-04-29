@@ -21,9 +21,10 @@ class Transferecc extends Thread{
 	}
 
 	public Transferecc(String ficheiro, String address) throws SocketException,Exception{
-		cliente = new UDPClient(this);
+		this.cliente = new UDPClient(this);
 		this.upload=false;
 		this.download=true;
+		this.f=null;
 		this.filename=ficheiro;
 		IPdestino=address;
 	}
