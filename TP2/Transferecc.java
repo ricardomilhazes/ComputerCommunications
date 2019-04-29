@@ -42,32 +42,28 @@ class Transferecc extends Thread{
 
 		try{
 
-			TProto tp =	(TProto) toTProto(dados);
+            TProto tp =	(TProto) toTProto(dados);
 
 			if(this.upload == true){
+                
+                TransfereccUpload tup = new TransfereccUpload(cliente,this,ip,this.f);
 
-				if(tfu==null){
-
-					TransfereccUpload tup;
-					tup = new TransfereccUpload(cliente,this,ip,this.f);
+                if(tfu==null){
 
 					new Thread(tup).start();
+                    System.out.println("cona2");
 
 					tfu = tup;
 
 					tfu.recebe(tp);
-				}
+				} else{
+				    tup.recebe(tp);
+			    }
+		     } else{
+			     tfd.recebe(tp);
+		     }
 
-				else{
-				tup.recebe(tp);
-			}
-		}
-		else{
-			tfd.recebe(tp);
-		}
-
-		}
-		catch(Exception e){
+		} catch(Exception e){
 			e.printStackTrace();
 		}
 

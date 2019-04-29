@@ -22,16 +22,16 @@ class TProto implements Serializable{
 
 
 	public TProto(int seq, int seq_conf,int mss1, boolean ack, boolean syn, boolean fin, boolean psh, boolean rst, boolean urg, byte[] d){
-		sequencia = seq;
-		seq_conf = seq_conf;
-		mss=mss1;
-		ack = ack;
-		syn = syn;
-		fin = fin;
-		psh = psh;
-		rst = rst;
-		urg = urg;
-		dados = d;
+		this.sequencia = seq;
+		this.sequencia_confirmacao = seq_conf;
+		this.mss=mss1;
+		this.ack = ack;
+		this.syn = syn;
+		this.fin = fin;
+		this.psh = psh;
+		this.rst = rst;
+		this.urg = urg;
+		this.dados = d;
 	}
 
 	public int getSequencia(){ 
