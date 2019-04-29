@@ -18,20 +18,18 @@ class TransfereccDownload extends Thread{
 	}
 
 	public void recebe (TProto p) {
-		System.out.println("Datagram Packet from " + this.ipd );
 		downloadData.add(p);
-    System.out.println(downloadData.getFirst().getSyn());
 	}
 
     public TProto nextTProto(){
-		TProto tp;
+	
+        TProto tp;
 
-    while(downloadData.size()==0){ }
+        while(downloadData.size()==0){ }
 		
-    tp = downloadData.removeFirst();
+        tp = downloadData.removeFirst();
 
-		return tp;
-			
+	   return tp;	
 	}
 
 	public void conectar() throws Exception{   // falta organizar esta funcao acho

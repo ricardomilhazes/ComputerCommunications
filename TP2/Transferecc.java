@@ -43,17 +43,16 @@ class Transferecc extends Thread{
 
 		try{
 
-            TProto tp =	(TProto) toTProto(dados);
+    TProto tp =	(TProto) toTProto(dados);
 
 		if(this.upload == true){
                 
-                TransfereccUpload tup = new TransfereccUpload(cliente,this,ip,this.f);
-
-		new Thread(tup).start();
-		tup.recebe(tp);
-		     } else{
-			     tfd.recebe(tp);
-		     }
+    	TransfereccUpload tup = new TransfereccUpload(cliente,this,ip,this.f);
+			new Thread(tup).start();
+			tup.recebe(tp);
+		} else{
+			tfd.recebe(tp);
+		 }
 
 		} catch(Exception e){
 			e.printStackTrace();

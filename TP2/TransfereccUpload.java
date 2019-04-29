@@ -25,13 +25,13 @@ class TransfereccUpload extends Thread{
     }
 
     public void recebe (TProto p) {
-    	uploadData.add(p);
-	System.out.println(uploadData.getFirst().getAck());
+        uploadData.add(p);
     }
 
     public TProto nextTProto(){
 		TProto tp;
-		while(uploadData.size()==0){}
+		while(uploadData.size()==0){ }
+        System.out.println(uploadData.getFirst().getAck());
 		tp = uploadData.removeFirst();
 		return tp;
 	}
@@ -45,7 +45,7 @@ class TransfereccUpload extends Thread{
                 cliente.send(p,enddestino,7777);
             }
             
-        }
+    }
 
      public void dividirFicheiro (){
         try{
@@ -123,13 +123,16 @@ class TransfereccUpload extends Thread{
         Este método vai ter de ser otimizado
     */
     public void run(){
-	try{
-        	conectar();
-
-        	enviarFicheiro();
-	}
-	catch(Exception e){
-	e.printStackTrace();
+	
+    try{
+        
+        conectar();
+        enviarFicheiro();
+	
+    }
+	
+    catch(Exception e){
+	   e.printStackTrace();
 	}
 
         //tfcc.desconectar(enddestino); // FALTA FAZER A FUNCAO DESCONECTAR
