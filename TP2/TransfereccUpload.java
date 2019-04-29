@@ -80,7 +80,6 @@ class TransfereccUpload extends Thread{
             }
             String data = new String(lidos);
             segmented_file.put(seq,data);
-            System.out.println(segmented_file.size());
 
         } catch(Exception e){
             e.printStackTrace();
@@ -112,7 +111,7 @@ class TransfereccUpload extends Thread{
           // recebe ACK
           while(true){
             TProto ack = nextTProto();
-            System.out.println(uploadData.getFirst().getAck());
+            System.out.println(ack.getAck());
             if(ack.getAck() == true){
                 break;
 		}
