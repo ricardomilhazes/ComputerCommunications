@@ -21,6 +21,7 @@ class TransfereccDownload extends Thread{
 	public void recebe (TProto p) {
 		System.out.println("Datagram Packet from " + this.ipd );
 		downloadData.add(p);
+    System.out.println(downloadData.getFirst().getSyn());
 	}
 
     public TProto nextTProto(){
