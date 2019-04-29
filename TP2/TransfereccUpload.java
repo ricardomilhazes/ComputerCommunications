@@ -104,17 +104,13 @@ class TransfereccUpload extends Thread{
                 break;
             }
         }
-
-        System.out.println("ola1");
-
+        
         // divide ficheiro consoante o MSS
         dividirFicheiro();
 
         // envia SYNACK
         TProto synack = new TProto(1, 0,1024, true, true, false, false,false,false,new byte[0]);
         cliente.send(synack,enddestino,7777);
-
-        System.out.println("ola2");
 
           // recebe ACK
           while(true){
