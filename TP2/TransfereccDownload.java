@@ -42,7 +42,7 @@ class TransfereccDownload extends Thread{
        while(true){
         	TProto synack = nextTProto();
         	if(synack.getSyn()==true && synack.getAck() == true){
-                n_segmento = 1;
+                n_segmento = 5;
         		break;
         	}
         }
@@ -68,8 +68,11 @@ public void run(){
 
             FileWriter writer = new FileWriter(file);
 
+            System.out.println("yo1");
+
             int segmento=0;
             while(segmento < n_segmento){
+              System.out.println("yo2");
             	TProto tp = nextTProto();
             	String dados = new String(tp.getDados());
             	System.out.println(dados);
