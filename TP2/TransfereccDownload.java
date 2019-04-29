@@ -21,11 +21,11 @@ class TransfereccDownload extends Thread{
 	public void recebe (TProto p) {
 		System.out.println("Datagram Packet from " + this.ipd );
 		downloadData.add(p);
-    System.out.println(downloadData.getFirst(p.getSyn) + downloadData.getFirst(p.getAck));
 	}
 
     public TProto nextTProto(){
 		TProto tp;
+    System.out.prinln(downloadData.getFirst.getSyn());
 		while(downloadData.size()==0){}
 
 		tp = downloadData.removeFirst();
