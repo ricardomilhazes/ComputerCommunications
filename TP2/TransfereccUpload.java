@@ -26,18 +26,18 @@ class TransfereccUpload extends Thread{
 
     public void recebe (TProto p) {
     	uploadData.add(p);
+	System.out.println(uploadData.getFirst().getAck());
     }
 
     public TProto nextTProto(){
 		TProto tp;
 		while(uploadData.size()==0){}
-            
 		tp = uploadData.removeFirst();
 		return tp;
 	}
 
     public void enviarFicheiro() throws Exception{
-            n_segmento = segmented_file.size();
+	    int n_segmento = segmented_file.size();
 
             for (int i=0, seq = 0; i< n_segmento; i++, seq+=mss) {
                 String data = segmented_file.get(seq);
@@ -113,11 +113,10 @@ class TransfereccUpload extends Thread{
           // recebe ACK
           while(true){
             TProto ack = nextTProto();
-            if(ack.getAck() == true)
+            if(ack.getAck() == true){
                 break;
+		}
         }
-
-        System.out.println("ola3");
     }
 
     /*
