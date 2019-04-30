@@ -95,6 +95,7 @@ public void run(){
             	}
        			else {
        				System.out.println("Erro no checksum");
+       				break;
        			}
             	segmento++;
 
