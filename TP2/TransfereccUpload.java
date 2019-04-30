@@ -30,6 +30,7 @@ class TransfereccUpload extends Thread{
 
     public TProto nextTProto(){
 		TProto tp;
+        system.out.println("yo");
 		while(uploadData.size()==0){ }
 		tp = uploadData.removeFirst();
 		return tp;
@@ -110,13 +111,10 @@ class TransfereccUpload extends Thread{
 
           // recebe ACK
           while(true){
-            System.out.println("lol1");
-            system.out.println(nextTProto.getAck());
             TProto ack = nextTProto();
-            System.out.println("lol2");
             if(ack.getAck() == true){
                 break;
-		}
+		    }
         }
     }
 
