@@ -155,7 +155,7 @@ class TransfereccUpload extends Thread{
     catch(Exception e){
 	   e.printStackTrace();
 	}
-        tfcc.desconectar(enddestino);
+        cc.desconectar(enddestino);
     }
 
 }
