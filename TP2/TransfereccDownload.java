@@ -8,7 +8,8 @@ class TransfereccDownload extends Thread{
 	String ficheirodestino;
 	LinkedList<TProto> downloadData = new LinkedList<>(); 
 	int n_segmento;
-
+    Lock l = new ReentrantLock();
+    Condition empty  = l.newCondition();
 
 
 	public TransfereccDownload (UDPClient cliente1, String ipdestino, String ficheiro) throws UnknownHostException {
@@ -18,18 +19,30 @@ class TransfereccDownload extends Thread{
 	}
 
 	public void recebe (TProto p) {
-		downloadData.add(p);
+        l.lock();
+        try{
+            downloadData.add(p);
+            empty.signal();
+        } finally{
+        l.unlock();
+        }
 	}
 
     public TProto nextTProto(){
-	
-        TProto tp;
-
-        while(downloadData.size()==0){ }
+	   l.lock();
+       TProto tp;
+       try{
+            while(downloadData.size()==0){ empty.await(); }
 		
-        tp = downloadData.removeFirst();
+            tp = downloadData.removeFirst();
 
-	   return tp;	
+	        return tp;
+        } catch(InterruptedException e){
+            e.printStackTrace();
+        }finally{
+            l.unlock();
+        }
+        return null;
 	}
 
 	public void conectar() throws Exception{   // falta organizar esta funcao acho
