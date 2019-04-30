@@ -7,6 +7,7 @@ class TProto implements Serializable{
 	boolean ack, syn, fin, psh, rst, urg;
 	byte[] dados;
 	byte checksum;
+	int segmentos;
 
 
 	public TProto(int seq, int seq_conf,int mss1, boolean ack, boolean syn, boolean fin, boolean psh, boolean rst, boolean urg, byte[] d){
@@ -66,6 +67,10 @@ class TProto implements Serializable{
 		return this.checksum;
 	}
 
+	public int getSegmentos(){
+		return this.segmentos;
+	}
+
 	public static final byte calculaChecksum (byte[] data) {
   		byte sum = 0;
 		for (byte b : data) {
@@ -77,6 +82,10 @@ class TProto implements Serializable{
 	public void setChecksum (byte checksum1) {
 		this.checksum= checksum1;
 
+	}
+
+	public void setSegmentos(int segmentos1){
+		this.segmentos=segmentos1;
 	}
 
 	public byte[] fromTProto() throws IOException {

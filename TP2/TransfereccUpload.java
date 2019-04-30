@@ -61,7 +61,6 @@ class TransfereccUpload extends Thread{
                 String data = segmented_file.get(seq);
                 TProto p = new TProto (seq,0,1024,false,false,false,false,false,false,data.getBytes());
                 byte c = p.calculaChecksum(data.getBytes());
-                c+=c;
                 p.setChecksum(c);
                 cliente.send(p,enddestino,7777);
             }
@@ -128,6 +127,7 @@ class TransfereccUpload extends Thread{
 
         // envia SYNACK
         TProto synack = new TProto(1, 0,1024, true, true, false, false,false,false,new byte[0]);
+        synack.setSegmentos(segmented_file.size());
         cliente.send(synack,enddestino,7777);
 
           // recebe ACK

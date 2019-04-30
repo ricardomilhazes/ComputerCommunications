@@ -96,6 +96,8 @@ class Transferecc extends Thread{
 				tfd = new TransfereccDownload(cliente,IPdestino,filename);
 				new Thread(tfd).run();
 			}
+			cliente.closeAgente();
+			client.interrupt();
 		} catch(UnknownHostException e){
 			e.printStackTrace();
 		}
