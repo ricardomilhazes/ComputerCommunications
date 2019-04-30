@@ -128,6 +128,7 @@ class TransfereccUpload extends Thread{
         // envia SYNACK
         TProto synack = new TProto(1, 0,1024, true, true, false, false,false,false,new byte[0]);
         synack.setSegmentos(segmented_file.size());
+        System.out.println(segmented_file.size());
         cliente.send(synack,enddestino,7777);
 
           // recebe ACK
