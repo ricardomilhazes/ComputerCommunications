@@ -59,8 +59,8 @@ class Transferecc extends Thread{
 				new Thread(ntup).start();
 
 				l.lock();
-        threads_upload.put(ip,ntup);
-        l.unlock();
+    		    threads_upload.put(ip,ntup);
+   			    l.unlock();
 
 				ntup.recebe(tp);
 			} else{
@@ -74,6 +74,17 @@ class Transferecc extends Thread{
 			e.printStackTrace();
 		}
 
+	}
+
+	public void desconectar(InetAddress endereco) {
+		try {
+			l.lock();
+			threads_upload.remove(endereco);
+			l.unlock();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void run(){
