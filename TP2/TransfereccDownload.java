@@ -81,7 +81,7 @@ public void run(){
             FileWriter writer = new FileWriter(file);
 
             int segmento=0;
-            while(segmento < n_segmento){
+            while(segmento < 1){
             	TProto tp = nextTProto();
             	String dados = new String(tp.getDados());
             	System.out.println(dados);
