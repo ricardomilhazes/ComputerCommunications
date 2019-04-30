@@ -65,6 +65,10 @@ class TransfereccDownload extends Thread{
 
     }
 
+
+
+
+
 public void run(){
         try{
           
@@ -83,9 +87,15 @@ public void run(){
             int segmento=0;
             while(segmento < 1){
             	TProto tp = nextTProto();
-            	String dados = new String(tp.getDados());
-            	System.out.println(dados);
-            	writer.write(dados);
+            	byte c = tp.calculaChecksum(tp.getDados());
+            	if (c == tp.getChecksum()) {
+            		String dados = new String(tp.getDados());
+            		System.out.println(dados);
+            		writer.write(dados);
+            	}
+       			else {
+       				System.out.println("Erro no checksum");
+       			}
             	segmento++;
 
             }

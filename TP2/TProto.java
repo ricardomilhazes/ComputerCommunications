@@ -6,19 +6,7 @@ class TProto implements Serializable{
 	int sequencia, sequencia_confirmacao,mss;
 	boolean ack, syn, fin, psh, rst, urg;
 	byte[] dados;
-
-	public TProto(){
-	this.sequencia=0;
-	this.sequencia_confirmacao=0;
-	this.mss=1024;
-	this.ack=false;
-	this.fin=false;
-	this.syn=false;
-	this.psh=false;
-	this.rst=false;
-	this.urg=false;
-	this.dados=new byte[0];
-	}
+	byte checksum;
 
 
 	public TProto(int seq, int seq_conf,int mss1, boolean ack, boolean syn, boolean fin, boolean psh, boolean rst, boolean urg, byte[] d){
@@ -72,6 +60,23 @@ class TProto implements Serializable{
 
 	public byte[] getDados(){
 		return this.dados;
+	}
+
+	public byte getChecksum() {
+		return this.checksum;
+	}
+
+	public static final byte calculaChecksum (byte[] data) {
+  		byte sum = 0;
+		for (byte b : data) {
+    		  sum ^= b;
+  		}
+ 	  return sum;
+	}
+
+	public void setChecksum (byte checksum1) {
+		this.checksum= checksum1;
+
 	}
 
 	public byte[] fromTProto() throws IOException {
