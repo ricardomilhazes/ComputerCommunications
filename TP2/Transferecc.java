@@ -1,5 +1,8 @@
 import java.io.*;
 import java.net.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.concurrent.locks.*;
 
 class Transferecc extends Thread{
 	UDPClient cliente;
@@ -9,7 +12,7 @@ class Transferecc extends Thread{
 	File f;
 	String IPdestino;
 	Map<InetAddress,TransfereccUpload> threads_upload = new HashMap<>();
-	Lock l = new ReentrantLock();
+	final Lock l = new ReentrantLock();
 	TransfereccDownload tfd;
 
 	public Transferecc(File fich) throws SocketException,Exception{
