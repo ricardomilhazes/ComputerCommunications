@@ -8,7 +8,8 @@ class Transferecc extends Thread{
 	String filename;
 	File f;
 	String IPdestino;
-	TransfereccUpload tfu;
+	Map<InetAddress,TransfereccUpload> threads_upload = new HashMap<>();
+	Lock l = new ReentrantLock();
 	TransfereccDownload tfd;
 
 	public Transferecc(File fich) throws SocketException,Exception{
@@ -46,10 +47,22 @@ class Transferecc extends Thread{
     TProto tp =	(TProto) toTProto(dados);
 
 		if(this.upload == true){
+
+			TransfereccUpload tup = threads_upload.get(ipAddress);
+
+			if (tup == null){
                 
-    	TransfereccUpload tup = new TransfereccUpload(cliente,this,ip,this.f);
-			new Thread(tup).start();
-			tup.recebe(tp);
+    		TransfereccUpload ntup = new TransfereccUpload(cliente,this,ip,this.f);
+				new Thread(ntup).start();
+
+				l.lock();
+        threads_upload.put(ipAddress,ntup);
+        l.unlock();
+
+				ntup.recebe(tp);
+			} else{
+				tup.recebe(tp);
+			}
 		} else{
 			tfd.recebe(tp);
 		 }
