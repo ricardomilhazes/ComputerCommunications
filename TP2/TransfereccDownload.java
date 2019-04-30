@@ -1,6 +1,7 @@
 import java.net.*;
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.locks.*;
 
 class TransfereccDownload extends Thread{
 	UDPClient cliente;
@@ -8,8 +9,8 @@ class TransfereccDownload extends Thread{
 	String ficheirodestino;
 	LinkedList<TProto> downloadData = new LinkedList<>(); 
 	int n_segmento;
-    Lock l = new ReentrantLock();
-    Condition empty  = l.newCondition();
+    final Lock l = new ReentrantLock();
+    final Condition empty  = l.newCondition();
 
 
 	public TransfereccDownload (UDPClient cliente1, String ipdestino, String ficheiro) throws UnknownHostException {
