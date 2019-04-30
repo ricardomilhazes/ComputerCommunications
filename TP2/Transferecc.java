@@ -51,7 +51,7 @@ class Transferecc extends Thread{
 
 		if(this.upload == true){
 
-			TransfereccUpload tup = threads_upload.get(ipAddress);
+			TransfereccUpload tup = threads_upload.get(IPdestino);
 
 			if (tup == null){
                 
@@ -59,7 +59,7 @@ class Transferecc extends Thread{
 				new Thread(ntup).start();
 
 				l.lock();
-        threads_upload.put(ipAddress,ntup);
+        threads_upload.put(IPdestino,ntup);
         l.unlock();
 
 				ntup.recebe(tp);
