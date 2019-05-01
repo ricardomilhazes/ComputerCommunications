@@ -43,7 +43,7 @@ class TransfereccDownload extends Thread{
         }finally{
             l.unlock();
         }
-        return tp;
+        return null;
 	}
 
 	public void conectar() throws Exception{   // falta organizar esta funcao acho
@@ -85,7 +85,7 @@ public void run(){
             FileWriter writer = new FileWriter(file);
 
             int segmento=0;
-            while(segmento < 1){
+            while(segmento < 2){
             	TProto tp = nextTProto();
             	byte c = tp.calculaChecksum(tp.getDados());
             	if (c == tp.getChecksum()) {

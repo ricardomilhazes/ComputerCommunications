@@ -23,7 +23,7 @@ class UDPClient extends Thread{
    public void run(){
    		try{
    		while(true){
-      byte[] receiveData = new byte[1024];
+      byte[] receiveData = new byte[65527];
 			DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 			clientSocket.receive(receivePacket);
 			cc.receiveDatagram(receivePacket);

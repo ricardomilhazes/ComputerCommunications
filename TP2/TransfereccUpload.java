@@ -51,7 +51,7 @@ class TransfereccUpload extends Thread{
         }finally{
             l.unlock();
         }
-        return tp;
+        return null;
     }
 
     public void enviarFicheiro() throws Exception{
