@@ -43,7 +43,6 @@ class TransfereccDownload extends Thread{
         }finally{
             l.unlock();
         }
-        return null;
 	}
 
 	public void conectar() throws Exception{   // falta organizar esta funcao acho
