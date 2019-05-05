@@ -30,8 +30,6 @@ class UDPClient extends Thread{
 		}
    		} catch(Exception e) {
    		e.printStackTrace();
-   		} finally {
-   		clientSocket.close();
    		}
    	}
 }

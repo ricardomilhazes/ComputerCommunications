@@ -81,7 +81,6 @@ class Transferecc extends Thread{
 			l.lock();
 			threads_upload.remove(endereco);
 			l.unlock();
-			this.download=false;
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -89,14 +88,15 @@ class Transferecc extends Thread{
 	}
 
 	public void run(){
-		while(this.download == true){
-			try{
-				Thread client = new Thread(cliente);
-				client.start();
-
+		try{
+			Thread client = new Thread(cliente);
+			client.start();
+			if(this.download==true){
 			
 				tfd = new TransfereccDownload(cliente,IPdestino,filename);
 				new Thread(tfd).run();
+				client.interrupt();
+				cliente.closeAgente();
 			}
 		} catch(UnknownHostException e){
 			e.printStackTrace();
