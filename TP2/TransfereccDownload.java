@@ -5,6 +5,7 @@ import java.util.concurrent.locks.*;
 
 class TransfereccDownload extends Thread{
 	UDPClient cliente;
+	Transferecc cc;
 	InetAddress ipd;
 	String ficheirodestino;
 	LinkedList<TProto> downloadData = new LinkedList<>(); 
@@ -103,6 +104,7 @@ public void run(){
             writer.close();
 
             System.out.println("Download 100% com sucesso");
+            cc.desconectar(ipd);
         } catch(Exception e){
             e.printStackTrace();
         }
