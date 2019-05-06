@@ -32,20 +32,22 @@ class TransfereccUpload extends Thread{
         l.lock();
         try{
             int index = p.getSequencia()/1024;
-            if(tranferencia == true && p.getAck()==true){
-                if(n_segmentos[index]==1){
-                    System.out.println("Duplicated");
-                    TProto retry = new TProto(index*1024,0,1024,false,false,false,false,false,false,(segmented_file.get(index*1024).getBytes()));
-                    cliente.send(retry,enddestino,7777);
+            if(tranferencia == true){
+                if(p.getAck()==true){
+                        if(n_segmentos[index]==1){
+                            System.out.println("Duplicated");
+                            TProto retry = new TProto(index*1024,0,1024,false,false,false,false,false,false,(segmented_file.get(index*1024).getBytes()));
+                            cliente.send(retry,enddestino,7777);
+                        }
+                        else{
+                            n_segmentos[index] = 1;
+                        }
+                    }
                 }
                 else{
-                    n_segmentos[index] = 1;
+                    uploadData.add(p);
+                    empty.signal();
                 }
-            }
-            else{
-                uploadData.add(p);
-                empty.signal();
-            }
         } finally{
         l.unlock();
         }
@@ -72,7 +74,7 @@ class TransfereccUpload extends Thread{
 	    int n_segmento = segmented_file.size();
 
             for (int i=0, seq = 0; i< n_segmento; i++, seq+=mss) {
-		Thread.sleep(2);
+		        Thread.sleep(2);
                 String data = segmented_file.get(seq);
                 TProto p = new TProto (seq,0,1024,false,false,false,false,false,false,data.getBytes());
                 byte c = p.calculaChecksum(data.getBytes());
