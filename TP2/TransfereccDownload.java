@@ -85,11 +85,19 @@ public void run(){
             FileWriter writer = new FileWriter(file);
 
             int segmento=0;
-            while(segmento < 2){
+            while(segmento < n_segmento){
             	TProto tp = nextTProto();
             	byte c = tp.calculaChecksum(tp.getDados());
             	if (c == tp.getChecksum()) {
-            		String dados = new String(tp.getDados());
+                if(tp.getSequencia() == (segmento*1024)){
+            		    TProto ack = new TProto(((segmento+1)*1024),1,1024,true,false,false,false,false,false,new byte[0]);
+                    cliente.send(ack,ipd,7777);
+                  }
+                else{ 
+                    TProto ack = new TProto((segmento*1024),1,1024,true,false,false,false,false,false,new byte[0]);
+                    cliente.send(ack,ipd,7777);
+                }
+                String dados = new String(tp.getDados());
             		System.out.println(dados);
             		writer.write(dados);
             	}

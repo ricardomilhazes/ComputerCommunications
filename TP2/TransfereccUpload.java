@@ -15,7 +15,7 @@ class TransfereccUpload extends Thread{
     final Condition empty  = l.newCondition();
 	LinkedList<TProto> uploadData = new LinkedList<>();
     Map<Integer,String> segmented_file = new HashMap<>();  // map com os varios fragmentos do ficheiro que dividimos
-
+    boolean tranferencia=false;
 
 	public TransfereccUpload(UDPClient client, Transferecc transferecc,InetAddress ipdest, File f) throws UnknownHostException, IOException{
         cliente = client;
@@ -148,6 +148,7 @@ class TransfereccUpload extends Thread{
     try{
         
         conectar();
+        this.tranferencia=true;
         enviarFicheiro();
 	
     }
