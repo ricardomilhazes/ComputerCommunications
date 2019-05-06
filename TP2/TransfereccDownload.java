@@ -85,6 +85,7 @@ public void run(){
             FileWriter writer = new FileWriter(file);
 
             int segmento=0;
+	    System.out.println(n_segmento);
             while(segmento < n_segmento){
             	TProto tp = nextTProto();
             	byte c = tp.calculaChecksum(tp.getDados());
@@ -104,6 +105,7 @@ public void run(){
        				System.out.println("Erro no checksum");
        				break;
        			}
+		System.out.println(segmento);
             	segmento++;
 
             }
