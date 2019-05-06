@@ -35,9 +35,9 @@ class TransfereccUpload extends Thread{
             if(tranferencia == true){
                 if(p.getAck()==true){
                         if(n_segmentos[index]==1){
-                            System.out.println("Duplicated");
+                            System.out.println("Duplicated " + index);
                             TProto retry = new TProto(index*1024,0,1024,false,false,false,false,false,false,(segmented_file.get(index*1024).getBytes()));
-                            byte c = retry.calculaChecksum(data.getBytes());
+                            byte c = retry.calculaChecksum(segmented_file.get(index*1024).getBytes());
                             retry.setChecksum(c);
                             cliente.send(retry,enddestino,7777);
                         }
