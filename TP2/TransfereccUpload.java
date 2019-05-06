@@ -15,6 +15,7 @@ class TransfereccUpload extends Thread{
     final Condition empty  = l.newCondition();
 	LinkedList<TProto> uploadData = new LinkedList<>();
     Map<Integer,String> segmented_file = new HashMap<>();  // map com os varios fragmentos do ficheiro que dividimos
+    int[] n_segmentos;
     boolean tranferencia=false;
 
 	public TransfereccUpload(UDPClient client, Transferecc transferecc,InetAddress ipdest, File f) throws UnknownHostException, IOException{
@@ -30,8 +31,21 @@ class TransfereccUpload extends Thread{
     public void recebe (TProto p) {
         l.lock();
         try{
-            uploadData.add(p);
-            empty.signal();
+            int index = p.getSequencia()/1024;
+            if(tranferencia == true && p.getAck()==true){
+                if(n_segmentos[index]==1){
+                    System.out.println("Duplicated");
+                    TProto retry = segmented_file.get(index*1024);
+                    cliente.send(retry,enddestino,7777);
+                }
+                else{
+                    n_segmentos[index] = 1;
+                }
+            }
+            else{
+                uploadData.add(p);
+                empty.signal();
+            }
         } finally{
         l.unlock();
         }
@@ -101,6 +115,8 @@ class TransfereccUpload extends Thread{
             }
             String data = new String(lidos);
             segmented_file.put(seq,data);
+            n_segmentos = new int[segmented_file.size()];
+            Arrays.fill(n_segmentos,0);
 
         } catch(Exception e){
             e.printStackTrace();

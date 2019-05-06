@@ -98,7 +98,6 @@ public void run(){
                     cliente.send(ack,ipd,7777);
                 }
                 String dados = new String(tp.getDados());
-            		System.out.println(dados);
             		writer.write(dados);
             	}
        			else {
