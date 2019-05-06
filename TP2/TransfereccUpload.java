@@ -35,7 +35,7 @@ class TransfereccUpload extends Thread{
             if(tranferencia == true && p.getAck()==true){
                 if(n_segmentos[index]==1){
                     System.out.println("Duplicated");
-                    TProto retry = segmented_file.get(index*1024);
+                    TProto retry = new TProto(index*1024,0,1024,false,false,false,false,false,false,(segmented_file.get(index*1024).getBytes());
                     cliente.send(retry,enddestino,7777);
                 }
                 else{
